@@ -1,5 +1,5 @@
 import unittest
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player import Player
 
 class PlayerReaderStub:
@@ -94,14 +94,68 @@ class TestStatisticsService(unittest.TestCase):
 
         self.assertListEqual(teamplayers_info, NJD_teamplayers)
 
-    def test_search_top(self):
-        top3player = self.stats.top(3)
+    ### v1t16 ###
+    #def test_search_top(self):
+        #top3player = self.stats.top(3)
+
+        #correct_top3player = [
+            #{'name': 'McDavid', 'score': 153, 'goal': 64, 'assist': 89, 'team': 'EDM'},
+            #{'name': 'Draisaitl', 'score': 128, 'goal': 52, 'assist': 76, 'team': 'EDM'},
+            #{'name': 'Gretzky', 'score': 124, 'goal': 35, 'assist': 89, 'team': 'EDM'},
+            #{'name': 'Pastrnak', 'score': 113, 'goal': 61, 'assist': 52, 'team': 'BOS'}
+        #]
+
+        #top3player_info = [{'name': player.name, 'score': player.points, 'goal': player.goals, 'assist': player.assists, 'team': player.team} for player in top3player]
+
+        #self.assertListEqual(top3player_info, correct_top3player)
+
+    ### v1t17 ###
+    def test_search_toppoints(self):
+        top3player = self.stats.top(3, SortBy.POINTS)  
 
         correct_top3player = [
             {'name': 'McDavid', 'score': 153, 'goal': 64, 'assist': 89, 'team': 'EDM'},
             {'name': 'Draisaitl', 'score': 128, 'goal': 52, 'assist': 76, 'team': 'EDM'},
+            {'name': 'Gretzky', 'score': 124, 'goal': 35, 'assist': 89, 'team': 'EDM'}
+        ]
+
+        top3player_info = [{'name': player.name, 'score': player.points, 'goal': player.goals, 'assist': player.assists, 'team': player.team} for player in top3player]
+
+        self.assertListEqual(top3player_info, correct_top3player)
+
+    def test_search_topgoals(self):
+        top3player = self.stats.top(3, SortBy.GOALS)  
+
+        correct_top3player = [
+            {'name': 'McDavid', 'score': 153, 'goal': 64, 'assist': 89, 'team': 'EDM'},
+            {'name': 'Pastrnak', 'score': 113, 'goal': 61, 'assist': 52, 'team': 'BOS'},
+            {'name': 'Draisaitl', 'score': 128, 'goal': 52, 'assist': 76, 'team': 'EDM'}
+        ]
+
+        top3player_info = [{'name': player.name, 'score': player.points, 'goal': player.goals, 'assist': player.assists, 'team': player.team} for player in top3player]
+
+        self.assertListEqual(top3player_info, correct_top3player)
+
+    def test_search_topassists(self):
+        top3player = self.stats.top(3, SortBy.ASSISTS)  
+
+        correct_top3player = [
             {'name': 'Gretzky', 'score': 124, 'goal': 35, 'assist': 89, 'team': 'EDM'},
-            {'name': 'Pastrnak', 'score': 113, 'goal': 61, 'assist': 52, 'team': 'BOS'}
+            {'name': 'McDavid', 'score': 153, 'goal': 64, 'assist': 89, 'team': 'EDM'},
+            {'name': 'Draisaitl', 'score': 128, 'goal': 52, 'assist': 76, 'team': 'EDM'}
+        ]
+
+        top3player_info = [{'name': player.name, 'score': player.points, 'goal': player.goals, 'assist': player.assists, 'team': player.team} for player in top3player]
+
+        self.assertListEqual(top3player_info, correct_top3player)
+
+    def test_search_topnone(self):
+        top3player = self.stats.top(3)  
+
+        correct_top3player = [
+            {'name': 'McDavid', 'score': 153, 'goal': 64, 'assist': 89, 'team': 'EDM'},
+            {'name': 'Draisaitl', 'score': 128, 'goal': 52, 'assist': 76, 'team': 'EDM'},
+            {'name': 'Gretzky', 'score': 124, 'goal': 35, 'assist': 89, 'team': 'EDM'}
         ]
 
         top3player_info = [{'name': player.name, 'score': player.points, 'goal': player.goals, 'assist': player.assists, 'team': player.team} for player in top3player]

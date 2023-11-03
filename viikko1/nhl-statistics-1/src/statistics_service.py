@@ -1,5 +1,7 @@
 from player_reader import PlayerReader
+from enum import Enum
 
+### v1t16 ###
 
 def sort_by_points(player):
     return player.points
@@ -27,17 +29,44 @@ class StatisticsService:
 
         return list(players_of_team)
 
-    def top(self, how_many):
+    ### v1t16 ###
+    #def top(self, how_many):
+        #sorted_players = sorted(
+            #self._players,
+            #reverse=True,
+            #key=sort_by_points
+        #)
+
+        #result = []
+        #i = 0
+        #while i <= how_many:
+            #result.append(sorted_players[i])
+            #i += 1
+
+        #return result
+    
+    ### v1t17 ###
+    def top(self, how_many, sort_by=None):
+        if sort_by == SortBy.POINTS:
+            key_function = lambda player: player.points
+        elif sort_by == SortBy.GOALS:
+            key_function = lambda player: player.goals
+        elif sort_by == SortBy.ASSISTS:
+            key_function = lambda player: player.assists
+        else:
+            key_function = lambda player: player.points  
+
         sorted_players = sorted(
             self._players,
             reverse=True,
-            key=sort_by_points
+            key=key_function
         )
 
-        result = []
-        i = 0
-        while i <= how_many:
-            result.append(sorted_players[i])
-            i += 1
+        return sorted_players[:how_many]
+    
+### v1t17 ###
 
-        return result
+class SortBy(Enum):
+    POINTS = 1
+    GOALS = 2
+    ASSISTS = 3
