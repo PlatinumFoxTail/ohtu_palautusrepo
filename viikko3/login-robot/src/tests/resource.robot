@@ -2,6 +2,10 @@
 Library  ../AppLibrary.py
 
 *** Keywords ***
+### v1t3 ###
+Input New Command
+    Input  new
+
 Input Login Command
     Input  login
 
