@@ -6,8 +6,8 @@ Library  ../AppLibrary.py
 ${SERVER}  localhost:5001
 
 ### v3t7 ###
-#${DELAY}  0.5 seconds
-${DELAY}  0 seconds
+${DELAY}  0.5 seconds
+#${DELAY}  0 seconds
 
 ${HOME_URL}  http://${SERVER}
 ${LOGIN_URL}  http://${SERVER}/login
@@ -23,7 +23,7 @@ Open And Configure Browser
     # seuraava rivi on kommentoitu toistaiseksi pois
     
     ### v3t7 ###
-    Call Method  ${options}  add_argument  --headless
+    #Call Method  ${options}  add_argument  --headless
     Open Browser  browser=chrome  options=${options}
     Set Selenium Speed  ${DELAY}
 

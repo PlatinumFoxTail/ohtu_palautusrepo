@@ -34,6 +34,30 @@ Register With Nonmatching Password And Password Confirmation
     Submit Registration
     Registration Should Fail With Message  Password and Password Confirmation Nonmatching
 
+Login After Successful Registration
+    Set Username  pekka
+    Set Password  pekka123
+    Set Password Confirmation  pekka123
+    Submit Registration
+    Registration Should Succeed
+    Continue To Main Page
+    Log Out
+    Set Username  pekka
+    Set Password  pekka123
+    Submit Credentials
+    Login Should Succeed
+
+Login After Failed Registration
+    Set Username  kajsa
+    Set Password  kajsa123
+    Set Password Confirmation  kajsa111
+    Submit Registration
+    Registration Should Fail With Message  Password and Password Confirmation Nonmatching
+    Continue To Login
+    Set Username  kajsa
+    Set Password  kajsa123
+    Submit Credentials
+    Login Should Fail With Message  Invalid username or password
 
 *** Keywords ***
 
@@ -58,4 +82,24 @@ Registration Should Succeed
 Registration Should Fail With Message
     [Arguments]  ${message}
     Register Page Should Be Open
+    Page Should Contain  ${message}
+
+Continue To Main Page
+    Click Link  Continue to main page
+
+Log Out
+    Click Button  Logout
+
+Submit Credentials
+    Click Button  Login
+
+Login Should Succeed
+    Main Page Should Be Open
+
+Continue To Login
+    Click Link  Login
+
+Login Should Fail With Message
+    [Arguments]  ${message}
+    Login Page Should Be Open
     Page Should Contain  ${message}
