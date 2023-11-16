@@ -23,8 +23,16 @@ Open And Configure Browser
 Login Page Should Be Open
     Title Should Be  Login
 
+### v3t5 ###
+Register Page Should Be Open
+    Title Should Be  Register
+
 Main Page Should Be Open
     Title Should Be  Ohtu Application main page
 
 Go To Login Page
     Go To  ${LOGIN_URL}
+
+### v3t5 ###
+Go To Main Page
+    Go To  ${HOME_URL}
