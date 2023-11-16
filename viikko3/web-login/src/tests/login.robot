@@ -17,6 +17,13 @@ Login With Incorrect Password
     Submit Credentials
     Login Should Fail With Message  Invalid username or password
 
+#### v3t6 ###
+Login With Nonexistent Username
+    Set Username  nalle
+    Set Password  kalle123
+    Submit Credentials
+    Login Should Fail With Message  Invalid username or password
+
 *** Keywords ***
 Login Should Succeed
     Main Page Should Be Open
