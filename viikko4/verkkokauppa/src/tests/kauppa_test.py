@@ -10,8 +10,14 @@ class TestKauppa(unittest.TestCase):
         self.pankki_mock = Mock()
         self.viitegeneraattori_mock = Mock()
 
+        ### v4t3 ###
         # palautetaan aina arvo 42
-        self.viitegeneraattori_mock.uusi.return_value = 42
+        #self.viitegeneraattori_mock.uusi.return_value = 42
+        ### v4t3 ###
+
+        ### v4t4 ###
+        self.viitegeneraattori_mock.return_value = Mock(wraps=Viitegeneraattori())
+        ### v4t4 ###
 
         self.varasto_mock = Mock()
 
@@ -59,8 +65,14 @@ class TestKauppa(unittest.TestCase):
         kauppa.lisaa_koriin(1)
         kauppa.tilimaksu("mikko", "11111")
 
+        ### v4t3 ###
         # varmistetaan, että metodia tilisiirto on kutsuttu
-        self.pankki_mock.tilisiirto.assert_called_with('mikko', 42, "11111", '33333-44455', 5)
+        #self.pankki_mock.tilisiirto.assert_called_with('mikko', 42, "11111", '33333-44455', 5)
+        ### v4t3 ###
+
+        ### v4t4 ###
+        self.pankki_mock.tilisiirto.assert_called_with('mikko', ANY, "11111", '33333-44455', 5)
+        ### v4t4 ###
 
     def test_ostoksen_paaytyttya_pankin_metodia_tilisiirto_kutsutaan_data(self):
         # alustetaan kauppa
@@ -71,8 +83,13 @@ class TestKauppa(unittest.TestCase):
         kauppa.lisaa_koriin(1)
         kauppa.tilimaksu("mikko", "11111")
 
+        ### v4t3 ###
         # varmistetaan, että metodia tilisiirto on kutsuttu
-        self.pankki_mock.tilisiirto.assert_called_with('mikko', 42, "11111", '33333-44455', 5)
+        #self.pankki_mock.tilisiirto.assert_called_with('mikko', 42, "11111", '33333-44455', 5)
+
+        ### v4t4 ###
+        self.pankki_mock.tilisiirto.assert_called_with('mikko', ANY, "11111", '33333-44455', 5)
+        ### v4t4 ###
 
     def test_ostoksen_paaytyttya_pankin_metodia_tilisiirto_kutsutaan_kaksi_eri_tuotetta(self):
         # alustetaan kauppa
@@ -84,8 +101,14 @@ class TestKauppa(unittest.TestCase):
         kauppa.lisaa_koriin(2)
         kauppa.tilimaksu("pekka", "22222")
 
+        ### v4t3 ###
         # varmistetaan, että metodia tilisiirto on kutsuttu
-        self.pankki_mock.tilisiirto.assert_called_with('pekka', 42, "22222", '33333-44455', 15)
+        #self.pankki_mock.tilisiirto.assert_called_with('pekka', 42, "22222", '33333-44455', 15)
+        ### v4t3 ###
+
+        ### v4t4 ###
+        self.pankki_mock.tilisiirto.assert_called_with('pekka', ANY, "22222", '33333-44455', 15)
+        ### v4t4 ###
 
     def test_ostoksen_paaytyttya_pankin_metodia_tilisiirto_kutsutaan_kaksi_samaa_tuotetta(self):
         # alustetaan kauppa
@@ -97,8 +120,14 @@ class TestKauppa(unittest.TestCase):
         kauppa.lisaa_koriin(1)
         kauppa.tilimaksu("eero", "33333")
 
+        ### v4t3 ###
         # varmistetaan, että metodia tilisiirto on kutsuttu
-        self.pankki_mock.tilisiirto.assert_called_with('eero', 42, "33333", '33333-44455', 10)
+        #self.pankki_mock.tilisiirto.assert_called_with('eero', 42, "33333", '33333-44455', 10)
+        ### v4t3 ###
+
+        ### v4t4 ###
+        self.pankki_mock.tilisiirto.assert_called_with('eero', ANY, "33333", '33333-44455', 10)
+        ### v4t4 ###
 
     def test_ostoksen_paaytyttya_pankin_metodia_tilisiirto_kutsutaan_kaksi_eri_tuotetta_toinen_tuote_loppu(self):
         # alustetaan kauppa
@@ -110,5 +139,11 @@ class TestKauppa(unittest.TestCase):
         kauppa.lisaa_koriin(3)
         kauppa.tilimaksu("lauri", "44444")
 
+        ### v4t3 ###
         # varmistetaan, että metodia tilisiirto on kutsuttu
-        self.pankki_mock.tilisiirto.assert_called_with('lauri', 42, "44444", '33333-44455', 5)
+        #self.pankki_mock.tilisiirto.assert_called_with('lauri', 42, "44444", '33333-44455', 5)
+        ### v4t3 ###
+
+        ### v4t4 ###
+        self.pankki_mock.tilisiirto.assert_called_with('lauri', ANY, "44444", '33333-44455', 5)
+        ### v4t4 ###
