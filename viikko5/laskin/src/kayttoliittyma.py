@@ -10,13 +10,13 @@ class Komento(Enum):
 
 
 class Kayttoliittyma:
-    def __init__(self, sovellus, root):
-        self._sovellus = sovellus
+    def __init__(self, sovelluslogiikka, root):
+        self._sovelluslogiikka = sovelluslogiikka
         self._root = root
 
     def kaynnista(self):
         self._arvo_var = StringVar()
-        self._arvo_var.set(self._sovellus.arvo())
+        self._arvo_var.set(self._sovelluslogiikka.arvo())
         self._syote_kentta = ttk.Entry(master=self._root)
 
         tulos_teksti = ttk.Label(textvariable=self._arvo_var)
@@ -63,20 +63,20 @@ class Kayttoliittyma:
             pass
 
         if komento == Komento.SUMMA:
-            self._sovellus.plus(arvo)
+            self._sovelluslogiikka.plus(arvo)
         elif komento == Komento.EROTUS:
-            self._sovellus.miinus(arvo)
+            self._sovelluslogiikka.miinus(arvo)
         elif komento == Komento.NOLLAUS:
-            self._sovellus.nollaa()
+            self._sovelluslogiikka.nollaa()
         elif komento == Komento.KUMOA:
             pass
 
         self._kumoa_painike["state"] = constants.NORMAL
 
-        if self._sovellus.arvo() == 0:
+        if self._sovelluslogiikka.arvo() == 0:
             self._nollaus_painike["state"] = constants.DISABLED
         else:
             self._nollaus_painike["state"] = constants.NORMAL
 
         self._syote_kentta.delete(0, constants.END)
-        self._arvo_var.set(self._sovellus.arvo())
+        self._arvo_var.set(self._sovelluslogiikka.arvo())
