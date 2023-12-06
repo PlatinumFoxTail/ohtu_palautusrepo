@@ -61,3 +61,26 @@ class Or:
             if matcher.test(player):
                 return True
 
+#v6t4
+class QueryBuilder:
+    #other alternative could be to change to def __init__(self, build = And()??? see Pinorakentaja [viikko6] https://ohjelmistotuotanto-hy.github.io/osa4/#pinorakentaja-viikko-6)
+    def __init__(self, matcher=None):
+        self._matcher = matcher
+        self._filter = []
+
+    def playsIn(self, team):
+        self._filter.append(PlaysIn(team))
+        return self
+
+    def hasAtLeast(self, value, attr):
+        self._filter.append(HasAtLeast(value, attr))
+        return self
+
+    def hasFewerThan(self, value, attr):
+        self._filter.append(HasFewerThan(value, attr))
+        return self
+
+    def build(self):
+        return And(*self._filter)
+
+
