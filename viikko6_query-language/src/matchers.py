@@ -46,7 +46,18 @@ class Not:
     def test(self, player):
         return not self._matcher.test(player)
 
-#6t2
+#v6t2
 class All:
     def test(self, player):
         return True
+
+#v6t3
+class Or:
+    def __init__(self, *matchers):
+        self._matchers = matchers
+
+    def test(self, player):
+        for matcher in self._matchers:
+            if matcher.test(player):
+                return True
+
