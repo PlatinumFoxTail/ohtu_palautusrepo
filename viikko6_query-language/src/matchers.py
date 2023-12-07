@@ -9,14 +9,12 @@ class And:
 
         return True
 
-
 class PlaysIn:
     def __init__(self, team):
         self._team = team
 
     def test(self, player):
         return player.team == self._team
-
 
 class HasAtLeast:
     def __init__(self, value, attr):
@@ -38,6 +36,7 @@ class HasFewerThan:
         player_value = getattr(player, self._attr)
 
         return player_value < self._value
+    
 #v6t2
 class Not:
     def __init__(self, matcher):
@@ -61,26 +60,22 @@ class Or:
             if matcher.test(player):
                 return True
 
-#v6t4
+#v6t4 improved and v6t5
 class QueryBuilder:
-    #other alternative could be to change to def __init__(self, build = And()??? see Pinorakentaja [viikko6] https://ohjelmistotuotanto-hy.github.io/osa4/#pinorakentaja-viikko-6)
-    def __init__(self, matcher=None):
-        self._matcher = matcher
-        self._filter = []
+    def __init__(self, matchers=None):
+        self._matchers = matchers or All()
 
+    #chaining additional conditions (e.g. PlaysIn(team)) with conditions included already in the self._matchers instance
     def playsIn(self, team):
-        self._filter.append(PlaysIn(team))
-        return self
-
+        return QueryBuilder(And(self._matchers, PlaysIn(team)))
     def hasAtLeast(self, value, attr):
-        self._filter.append(HasAtLeast(value, attr))
-        return self
-
+        return QueryBuilder(And(self._matchers, HasAtLeast(value, attr)))
     def hasFewerThan(self, value, attr):
-        self._filter.append(HasFewerThan(value, attr))
-        return self
-
+        return QueryBuilder(And(self._matchers, HasFewerThan(value, attr)))
+    
+    #creating instance where conditions m1 and m2 are combined
+    def oneOf(self, m1, m2):
+        return QueryBuilder(Or(m1, m2))
+    
     def build(self):
-        return And(*self._filter)
-
-
+        return self._matchers
